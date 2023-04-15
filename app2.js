@@ -146,10 +146,183 @@ function startClock(){
 }
 
 //TODO: use depth first 
-function check4InRow(row,col,counter = 0, total = 0,prevCoin=null,matched=0){
+function checkHorizontal4inRow(row,col){
+    
+    const rowCombos = []
 
- 
-   
+    if(col+3 < board1[0].length){
+       let p1 = [board1[row][col],board1[row][col+1],board1[row][col+2],board1[row][col+3]]
+        rowCombos.push(p1)
+        console.log(rowCombos)
+    }
+
+    if(col+2 < board1[0].length && col - 1 >= 0){
+        let p2 = [board1[row][col-1],board1[row][col],board1[row][col+1],board1[row][col+2]]
+        rowCombos.push(p2)
+        console.log(rowCombos)
+
+    }
+
+    if(col+1 < board1[0].length && col - 2 >= 0){
+        let p3 = [board1[row][col-2],board1[row][col-1],board1[row][col],board1[row][col+1]]
+        rowCombos.push(p3)
+        console.log(rowCombos)
+
+    }
+
+    if( col - 3 >= 0){
+
+        let p4 = [board1[row][col-3],board1[row][col-2],board1[row][col-1],board1[row][col]]
+        rowCombos.push(p4)
+        console.log(rowCombos)
+
+    }
+
+    let total = 0
+    let current = board1[row][col]
+    for(let i = 0; i < rowCombos.length; i++){
+        let counter = 0
+        for(let j = 0; j < rowCombos[i].length; j++){
+        
+            if(current === rowCombos[i][j]){
+                counter++
+                console.log(`total ${counter}`)
+            }
+        }
+        if(counter === 4){
+            total++
+            console.log(`total ${total}`)
+        }
+    }
+
+    return total
+}
+
+
+
+function checkVertical4inRow(row,col){
+    
+    let current = board1[row][col]
+   if(row <= 2){
+        if(current == board1[row+1][col] && current == board1[row+2][col] && current == board1[row+3][col]){
+            return 1
+        }
+   }
+
+   return 0
+}
+
+function check4InDiagonal1(row,col){
+
+    const rowCombos = []
+
+    if(col+3 < board1[0].length && row + 3 < board1.length){
+       let p1 = [board1[row][col],board1[row+1][col+1],board1[row+2][col+2],board1[row+3][col+3]]
+        rowCombos.push(p1)
+        console.log(rowCombos)
+    }
+
+    if(col+2 < board1[0].length && col - 1 >= 0 && row+2 < board1[0].length && row - 1 >= 0){
+        let p2 = [board1[row][col-1],board1[row][col],board1[row][col+1],board1[row][col+2]]
+        rowCombos.push(p2)
+        console.log(rowCombos)
+
+    }
+
+    if(col+1 < board1[0].length && col - 2 >= 0 && row +1 < board1.length && row - 2 >= 0){
+        let p3 = [board1[row-2][col-2],board1[row-1][col-1],board1[row][col],board1[row+1][col+1]]
+        rowCombos.push(p3)
+        console.log(rowCombos)
+    }
+
+    if( col - 3 >= 0 && row - 3 >= 0){
+
+        let p4 = [board1[row-3][col-3],board1[row-2][col-2],board1[row-1][col-1],board1[row][col]]
+        rowCombos.push(p4)
+        console.log(rowCombos)
+
+    }
+
+    let total = 0
+    let current = board1[row][col]
+    for(let i = 0; i < rowCombos.length; i++){
+        let counter = 0
+        for(let j = 0; j < rowCombos[i].length; j++){
+        
+            if(current === rowCombos[i][j]){
+                counter++
+                console.log(`total ${counter}`)
+            }
+        }
+        if(counter === 4){
+            total++
+            console.log(`total ${total}`)
+        }
+    }
+
+    return total
+}
+
+function check4InDiagonal2(row,col){
+
+    const rowCombos = []
+
+    if(col+3 < board1[0].length && row - 3 >= 0){
+       let p1 = [board1[row][col],board1[row-1][col+1],board1[row-2][col+2],board1[row-3][col+3]]
+        rowCombos.push(p1)
+        console.log(rowCombos)
+    }
+
+    if(col+2 < board1[0].length && row - 2 >= 0 && col - 1 >= 0 && row + 1 < board1.length){
+        let p1 = [board1[row+1][col-1],board1[row][col],board1[row-1][col+1],board1[row-2][col+2]]
+         rowCombos.push(p1)
+         console.log(rowCombos)
+     }
+
+     if(col+1 < board1[0].length && row - 1 >= 0 && col - 2 >= 0 && row + 2 < board1.length){
+        let p1 = [board1[row+2][col-2],board1[row+1][col-1],board1[row][col],board1[row-1][col+1]]
+         rowCombos.push(p1)
+         console.log(rowCombos)
+     }
+
+    
+
+    if( col - 3 >= 0 && row + 3 < board1.length){
+
+        let p4 = [board1[row+3][col-3],board1[row+2][col-2],board1[row+1][col-1],board1[row][col]]
+        rowCombos.push(p4)
+        console.log(rowCombos)
+
+    }
+
+    let total = 0
+    let current = board1[row][col]
+    for(let i = 0; i < rowCombos.length; i++){
+        let counter = 0
+        for(let j = 0; j < rowCombos[i].length; j++){
+        
+            if(current === rowCombos[i][j]){
+                counter++
+                console.log(`total ${counter}`)
+            }
+        }
+        if(counter === 4){
+            total++
+            console.log(`total ${total}`)
+        }
+    }
+
+    return total
+}
+
+function check4InRow(row,col){
+
+    let total = 0
+    total += checkHorizontal4inRow(row,col)
+    total += checkVertical4inRow(row,col)
+    total += check4InDiagonal1(row,col)
+    total += check4InDiagonal2(row,col)
+    return total
 }
 
 /**
