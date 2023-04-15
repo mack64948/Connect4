@@ -149,7 +149,87 @@ function startClock(){
 function check4InRow(row,col){
     let currentCoin = board1[row][col]
     total = 0
+    counter = 1
     //Check for diagonal 4 in a row
+    //count down right
+    console.log("counting down right")
+    for(let i = col+1, j = row + 1; i < board1[0].length && j < board1.length && i <= col + 3 && j <= row + 3; i++,j++){
+        let nextCoin = board1[j][i]
+        if(currentCoin === nextCoin){
+            counter++
+        } 
+
+        if(counter == 4){
+            total++
+        }
+    }
+
+    counter = 1
+    //count down left
+    console.log("counting down left")
+    for(let i = col-1, j = row + 1; i >= 0 && j < board1.length && i >= col - 3 && j <= row + 3; i--,j++){
+        let nextCoin = board1[j][i]
+        console.log(`Next coin ${nextCoin} at col ${i} and row ${j}`)
+        if(currentCoin === nextCoin){
+            counter++
+        } 
+
+        if(counter == 4){
+            total++
+        }
+    }
+
+    console.log("counter towards right")
+    counter = 1
+    for(let i = col+1; i < board1[0].length && i <= col + 3; i++){
+        let nextCoin = board1[row][i]
+        console.log(`Next coin ${nextCoin} at col ${i} and row ${row}`)
+
+        if(currentCoin === nextCoin){
+            counter++
+        } 
+    }
+
+    if(counter === 4){
+        total++
+    }
+    console.log(total)
+
+    counter = 1
+    console.log("counting towards left")
+    for(let i = col-1; i >= 0 && i >= col - 3; i--){
+        let nextCoin = board1[row][i]
+        if(currentCoin === nextCoin){
+            counter++
+        }
+    }
+
+    if(counter === 4){
+        total++
+    }
+
+    console.log(total)
+
+    console.log("count from middle")
+    for(let k = 1; k <= 2; k++){
+        counter = 1
+        for(let i = col-k; i >= 0 && i < board1.length && i <= col + 3 - k; i++){
+            let nextCoin = board1[row][i]
+            console.log(`Next Coin ${nextCoin} at col ${i} and row ${row}`)
+            if(nextCoin !== 0 && nextCoin === currentPlayer && currentCoin === nextCoin){
+                counter++
+            } else {
+                counter = 1
+            }
+        }
+
+        if(counter === 4){
+            total++
+        }
+        console.log(total)
+
+    }
+
     if(row <= 2){
         //Check for down left 4 in a row
 
