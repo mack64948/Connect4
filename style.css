@@ -43,6 +43,11 @@ h1{
     color: beige;
 }
 
+.button-panel button:hover{
+    background-color: white;
+    border: 2px solid darkblue;
+    color: darkblue;
+}
 
 .main-container{
     padding: 10px 20px;
@@ -84,32 +89,35 @@ h1{
     justify-content: center;
     gap: 5px;
 
-    padding: 20px 20px;
-    background-color: lightskyblue;
+    padding: 10px 20px;
+    background: url("./img/button_display.png");
+    background-size: contain;
+    background-repeat: no-repeat;
     border-radius: 10px;
-    border: thick solid black;
 
     width: 250px;
-    height: 70px;
+    height: 120px;
 
     position: absolute;
     left: 25%;
-    bottom: -50px;
+    bottom: -90px;
 }
 
 .player-turn-indicator > :first-child{
     font-size: 20px;
+    margin-top: -60px;
     margin-bottom: -10px;
+    
 }
 .player-turn-indicator > :last-child{
-    font-size: 30px;
+    font-size: 25px;
 }
 
 
 .player-score-container{
     color: white;
     flex-grow: 1;
-    padding: 30px 50px;
+    padding: 50px 50px;
     width: 300px;
     height: 300px;
     border: 2px solid black;
@@ -119,12 +127,17 @@ h1{
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 2px;
     justify-content: center;
 }
 
 .player-score-container > :first-child{
     font-size: 30px;
+    
+}
+
+.player-score-container > :last-child{
+    
 }
 .player1-score-container{
     background-color: red;

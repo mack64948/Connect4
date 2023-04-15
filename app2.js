@@ -9,6 +9,7 @@ let player1ScoreDisplay = document.querySelector(".player1-score")
 let player2ScoreDisplay = document.querySelector(".player2-score")
 let player1Score = 0
 let player2Score = 0
+var coinMoveAudio = new Audio('./audio/tone1.wav');
 
 
 const board1 = [
@@ -20,6 +21,86 @@ const board1 = [
     [0, 0, 0, 0, 0, 0, 0],  //5
 ]
 
+function initializeBoard(){
+    for(let i = 0; i < board1.length; i++){
+        for(let j = 0; j < board1[i].length; j++){
+            board1[i][j] = 0;
+            changeColor(i,j,"white")
+        }
+    }
+}
+
+let restartButton = document.querySelector('.restart-button')
+let menuButton = document.querySelector('.menu-button')
+
+menuButton.addEventListener("click", () => {
+   let menuDiv = document.createElement("div") 
+    menuDiv.setAttribute("style",`
+        position: absolute;
+        font-size: 30px;
+        background-color: white;
+        width: 80%;
+        height: 500px;
+        top: 20%;
+        left: 10%;
+        border: 2px solid black;
+        border-radius: 10px;
+        text-align: center;
+        display: flex;
+        gap: 20px;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+
+    `)
+
+    let closeButton = document.createElement("button")
+    closeButton.textContent = "X"
+    closeButton.setAttribute('style',`
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        pointer: cursor;
+        color: white;
+        font-size: 20px;
+        background-color: dodgerblue;
+        border: none;
+       
+    
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+    `)
+   
+    let par1 = document.createElement('p');
+    par1.textContent = "Enjoy the game!"
+    menuDiv.appendChild(par1)
+
+    let par2 = document.createElement('p');
+    par2.setAttribute('style',`
+        width: 70%;
+        margin: 0 auto;
+    `)
+    par2.textContent = "Each player gets one point if they manage to connect four of their coins either horizontally, vertically, or diagonally!"
+    menuDiv.appendChild(par2)
+    closeButton.addEventListener("click", () => {
+        body.removeChild(menuDiv)
+    })
+    menuDiv.appendChild(closeButton)
+   let body = document.querySelector("body")
+   body.appendChild(menuDiv)
+})
+
+restartButton.addEventListener("click", () => {
+    initializeBoard()
+    player1Score = 0 
+    player2Score = 0
+    player1ScoreDisplay.textContent = 0 
+    player2ScoreDisplay.textContent = 0
+    currentTurnText.textContent = `Player ${currentPlayer}'s Turn`
+    setNextPlayer()
+    startClock()
+})
 
 function resetScores(){
     player1Score = 0
@@ -129,9 +210,12 @@ function animateCoinSlots(row,col,startRow = 0,completionHandler){
     //change color of current coin slot
     let color = currentPlayer === 1 ? "red" : "blue"
     changeColor(startRow,col,color)
-
+   
+    
+    coinMoveAudio.play()
+    
     setTimeout(() => {
-
+        
         //animate next coin slot until you reach selected coin slot
         if(startRow < row){
             animateCoinSlots(row,col,startRow+1,completionHandler)
@@ -197,6 +281,24 @@ function setupGrid(){
     for(let i = 0; i < coinSlots.length; i++){
         let rowNum = Math.floor(i / board1[0].length);
         let colNum = i % (board1[0].length);
+
+        coinSlots[i].addEventListener("mouseenter",function(){
+            
+
+            if(isAvailableSlot(rowNum,colNum) && availableTime > 0){
+                changeColor(rowNum,colNum, currentPlayer === 1 ? "rgba(255,0,0,.5" : "rgba(0,0,255,0.5)") 
+            }
+        })
+
+        coinSlots[i].addEventListener("mouseleave",function(){
+          
+
+            if(isAvailableSlot(rowNum,colNum) && availableTime > 0){
+                changeColor(rowNum,colNum, "white") 
+            }
+        })
+
+
         coinSlots[i].addEventListener("click",function(){
             if(isRunning){
                 return;
